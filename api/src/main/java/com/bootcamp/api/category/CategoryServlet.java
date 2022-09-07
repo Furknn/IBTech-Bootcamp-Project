@@ -9,9 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.TransformerException;
+
+import org.w3c.dom.Document;
 
 import com.bootcamp.entity.Category;
 import com.bootcamp.manager.CategoryManager;
+import com.bootcamp.utils.XmlHelper;
+import com.bootcamp.xml.CategoryXmlManager;
 
 
 @WebServlet("/categories")
@@ -21,9 +26,15 @@ public class CategoryServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 CategoryManager cm= new CategoryManager();
 		 List<Category> categories= cm.getAll();
-		 PrintWriter resp=response.getWriter();
-		 for (Category cat: categories) {
-			 resp.append(cat.Name);
-		 }		
+		 
+		 CategoryXmlManager categoryXmlManager=new CategoryXmlManager();
+		 Document document=categoryXmlManager.format(categories.get(0));
+		 response.setContentType("application/xml; charset=UTF-8");
+		 try {
+			XmlHelper.dump(document, response.getOutputStream());
+		} catch (TransformerException | IOException e) {
+			e.printStackTrace();
+		}
+ 		
 	}
 }

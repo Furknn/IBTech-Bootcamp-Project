@@ -20,7 +20,6 @@ public abstract class BaseManager<T> {
     }
 
     public BaseManager() {
-        // TODO: read this from config file
         this("jdbc:postgresql://localhost:5432/bootcampproject", "sa", "123321xp");
     }
 
@@ -38,7 +37,6 @@ public abstract class BaseManager<T> {
     	try {
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         connection = DriverManager.getConnection(url, username, password);
