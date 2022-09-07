@@ -13,7 +13,8 @@ public class CartManager extends BaseManager<Cart> {
         try {
 
             String[] returnId = { "id" };
-            PreparedStatement statement = getConnection().prepareStatement("INSERT INTO cart (totalamount,customername) VALUES (?,?)",
+            PreparedStatement statement = getConnection().prepareStatement(
+                    "INSERT INTO cart (totalamount,customername) VALUES (?,?)",
                     returnId);
             statement.setDouble(1, t.getTotalAmount());
             statement.setString(2, t.getCustomerName());
@@ -38,7 +39,8 @@ public class CartManager extends BaseManager<Cart> {
 
     public Cart update(Cart t) {
         try {
-            PreparedStatement statement = getConnection().prepareStatement("UPDATE cart SET totalamount=?,customername=? WHERE id=?");
+            PreparedStatement statement = getConnection()
+                    .prepareStatement("UPDATE cart SET totalamount=?,customername=? WHERE id=?");
             statement.setDouble(1, t.getTotalAmount());
             statement.setString(2, t.getCustomerName());
             statement.setLong(3, t.getId());
@@ -99,10 +101,8 @@ public class CartManager extends BaseManager<Cart> {
     @Override
     public Cart parse(ResultSet resultSet) {
         try {
-            return resultSet.next()
-                    ? new Cart(resultSet.getLong("id"), resultSet.getDouble("totalAmount"),
-                            resultSet.getString("customerName"))
-                    : null;
+            return new Cart(resultSet.getLong("id"), resultSet.getDouble("totalAmount"),
+                    resultSet.getString("customerName"));
         } catch (SQLException e) {
 
             e.printStackTrace();

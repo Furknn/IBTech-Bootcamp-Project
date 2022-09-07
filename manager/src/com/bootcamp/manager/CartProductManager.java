@@ -105,11 +105,9 @@ public class CartProductManager extends BaseManager<CartProduct> {
 
     public CartProduct parse(ResultSet resultSet) {
         try {
-            return resultSet.next()
-                    ? new CartProduct(resultSet.getLong("Id"), resultSet.getLong("CartId"),
-                            resultSet.getLong("ProductId"),
-                            resultSet.getInt("Quantity"), resultSet.getDouble("Price"))
-                    : null;
+            return new CartProduct(resultSet.getLong("Id"), resultSet.getLong("CartId"),
+                    resultSet.getLong("ProductId"),
+                    resultSet.getInt("Quantity"), resultSet.getDouble("Price"));
         } catch (SQLException e) {
 
             e.printStackTrace();

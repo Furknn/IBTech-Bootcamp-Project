@@ -1,7 +1,6 @@
 package com.bootcamp.api.category;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -28,7 +27,7 @@ public class CategoryServlet extends HttpServlet {
 		 List<Category> categories= cm.getAll();
 		 
 		 CategoryXmlManager categoryXmlManager=new CategoryXmlManager();
-		 Document document=categoryXmlManager.format(categories.get(0));
+		 Document document=categoryXmlManager.formatList(categories);
 		 response.setContentType("application/xml; charset=UTF-8");
 		 try {
 			XmlHelper.dump(document, response.getOutputStream());

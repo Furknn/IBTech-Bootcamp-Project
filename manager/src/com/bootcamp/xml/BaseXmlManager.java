@@ -1,5 +1,7 @@
 package com.bootcamp.xml;
 
+import java.util.List;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
@@ -30,6 +32,26 @@ public abstract class BaseXmlManager<T> {
         return element;
     }
 
-    public abstract T parse(Document document);
+    public T parse(Document document){
+        return parse(document, 0);
+    }
 
+    protected abstract T parse(Document document, int index);
+
+    public Document formatList(List<T> list) {
+        Document document;
+        try {
+            document = XmlHelper.createDocument();
+            Element elements = formatList(document, list);
+            document.appendChild(elements);
+            return document;
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    protected abstract Element formatList(Document document, List<T> list);
+
+    public abstract List<T> parseList(Document document);
 }

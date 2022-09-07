@@ -22,7 +22,6 @@ public class User {
         Id = id;
     }
 
- 
     public String getPassword() {
         return Password;
     }
