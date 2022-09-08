@@ -1,8 +1,8 @@
 package com.bootcamp.entity;
 
 public class Category {
-    public long Id;
-    public String Name;
+    private long Id;
+    private String Name;
 
     public Category(long id, String name) {
         Id = id;

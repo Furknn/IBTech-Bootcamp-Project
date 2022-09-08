@@ -1,8 +1,8 @@
 package com.bootcamp.entity;
 
 public class Menu {
-    public long Id;
-    public String Title;
+    private long Id;
+    private String Title;
 
     public Menu(long id, String title) {
         Id = id;

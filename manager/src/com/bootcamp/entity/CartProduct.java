@@ -1,11 +1,11 @@
 package com.bootcamp.entity;
 
 public class CartProduct {
-    public long Id;
-    public long CartId;
-    public long ProductId;
-    public int Quantity;
-    public double Price;
+    private long Id;
+    private long CartId;
+    private long ProductId;
+    private int Quantity;
+    private double Price;
 
     public CartProduct() {
     }

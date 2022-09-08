@@ -18,6 +18,7 @@ public class ProductXmlManager extends BaseXmlManager<Product> {
         element.appendChild(createElement(document, "name", t.getName()));
         element.appendChild(createElement(document, "price", String.valueOf(t.getPrice())));
         element.appendChild(createElement(document, "categoryid", String.valueOf(t.getCategoryId())));
+        element.appendChild(createElement(document, "imageUrl", t.getImageUrl()));
         return element;
     }
 
@@ -28,7 +29,8 @@ public class ProductXmlManager extends BaseXmlManager<Product> {
         String name = element.getElementsByTagName("name").item(index).getTextContent();
         double price = Double.parseDouble(element.getElementsByTagName("price").item(index).getTextContent());
         long categoryId = Long.parseLong(element.getElementsByTagName("categoryid").item(index).getTextContent());
-        return new Product(id, name, price, categoryId);
+        String imageUrl = element.getElementsByTagName("imageurl").item(index).getTextContent();
+        return new Product(id, name, price, categoryId, imageUrl);
     }
 
     @Override

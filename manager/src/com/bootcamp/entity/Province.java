@@ -1,8 +1,8 @@
 package com.bootcamp.entity;
 
 public class Province {
-    public long Id;
-    public String Name;
+    private long Id;
+    private String Name;
 
     public Province(long id, String name) {
         Id = id;

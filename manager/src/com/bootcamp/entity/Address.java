@@ -1,10 +1,10 @@
 package com.bootcamp.entity;
 
 public class Address {
-    public long Id;
-    public long ProvinceId;
-    public String Address1;
-    public String Address2;
+    private long Id;
+    private long ProvinceId;
+    private String Address1;
+    private String Address2;
 
     public Address(long id, long provinceId, String address1, String address2) {
         Id = id;

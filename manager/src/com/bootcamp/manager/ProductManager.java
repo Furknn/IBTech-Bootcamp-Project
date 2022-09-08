@@ -14,10 +14,11 @@ public class ProductManager extends BaseManager<Product> {
         try {
             String[] returnId = { "id" };
             PreparedStatement statement = getConnection()
-                    .prepareStatement("INSERT INTO product (name, price, categoryid) VALUES (?, ?, ?)", returnId);
+                    .prepareStatement("INSERT INTO product (name, price, categoryid, imageUrl) VALUES (?, ?, ?, ?)", returnId);
             statement.setString(1, t.getName());
             statement.setDouble(2, t.getPrice());
             statement.setLong(3, t.getCategoryId());
+            statement.setString(4, t.getImageUrl());
             int affected = statement.executeUpdate();
             if (affected > 0) {
                 ResultSet rs = statement.getGeneratedKeys();
@@ -39,11 +40,12 @@ public class ProductManager extends BaseManager<Product> {
     public Product update(Product t) {
         try {
             PreparedStatement statement = getConnection()
-                    .prepareStatement("UPDATE product SET name=?, price=?, categoryid=? WHERE id=?");
+                    .prepareStatement("UPDATE product SET name=?, price=?, categoryid=?, imageUrl=? WHERE id=?");
             statement.setString(1, t.getName());
             statement.setDouble(2, t.getPrice());
             statement.setLong(3, t.getCategoryId());
-            statement.setLong(4, t.getId());
+            statement.setString(4, t.getImageUrl());
+            statement.setLong(5, t.getId());
             int affected = statement.executeUpdate();
             if (affected <= 0) {
                 t = null;
@@ -82,9 +84,34 @@ public class ProductManager extends BaseManager<Product> {
                 product.setName(result.getString("name"));
                 product.setPrice(result.getDouble("price"));
                 product.setCategoryId(result.getLong("categoryid"));
+                product.setImageUrl(result.getString("imageurl"));
             }
             disconnect();
             return product;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Product> getByCategory(long categoryId) {
+        try {
+            PreparedStatement statement = getConnection()
+                    .prepareStatement("SELECT * FROM product WHERE categoryid=?");
+            statement.setLong(1, categoryId);
+            ResultSet result = statement.executeQuery();
+            List<Product> products = new ArrayList<Product>();
+            while (result.next()) {
+                Product product = new Product();
+                product.setId(result.getLong("id"));
+                product.setName(result.getString("name"));
+                product.setPrice(result.getDouble("price"));
+                product.setCategoryId(result.getLong("categoryid"));
+                product.setImageUrl(result.getString("imageurl"));
+                products.add(product);
+            }
+            disconnect();
+            return products;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -103,6 +130,7 @@ public class ProductManager extends BaseManager<Product> {
                 product.setName(result.getString("name"));
                 product.setPrice(result.getDouble("price"));
                 product.setCategoryId(result.getLong("categoryid"));
+                product.setImageUrl(result.getString("imageurl"));
                 products.add(product);
             }
             disconnect();
@@ -116,7 +144,7 @@ public class ProductManager extends BaseManager<Product> {
     public Product parse(ResultSet resultSet) {
         try {
             return new Product(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getDouble("price"),
-                    resultSet.getLong("categoryId"));
+                    resultSet.getLong("categoryId"), resultSet.getString("imageUrl"));
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

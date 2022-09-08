@@ -1,19 +1,22 @@
 package com.bootcamp.entity;
 
 public class Product {
-	public long Id;
-	public String Name;
-    public double Price;
+    private long Id;
+    private String Name;
+    private double Price;
     private long CategoryId;
+    private String ImageUrl;
 
-    public Product(long id, String name, double price,long categoryId) {
+    public Product(long id, String name, double price, long categoryId, String imageUrl) {
         Id = id;
         Name = name;
         Price = price;
-        CategoryId=categoryId;
+        CategoryId = categoryId;
+        ImageUrl = imageUrl;
     }
 
-    public Product(){}
+    public Product() {
+    }
 
     public long getId() {
         return Id;
@@ -39,13 +42,20 @@ public class Product {
         Price = price;
     }
 
-	public long getCategoryId() {
-		return CategoryId;
-	}
+    public long getCategoryId() {
+        return CategoryId;
+    }
 
-	public void setCategoryId(long categoryId) {
-		CategoryId = categoryId;
-	}
-    
-    
+    public void setCategoryId(long categoryId) {
+        CategoryId = categoryId;
+    }
+
+    public String getImageUrl() {
+        return ImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
+    }
+
 }

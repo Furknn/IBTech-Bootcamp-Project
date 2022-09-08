@@ -1,10 +1,10 @@
 package com.bootcamp.entity;
 
 public class Article {
-    public long Id;
-    public String Title;
-    public String Content;
-    public String MenuId;
+    private long Id;
+    private String Title;
+    private String Content;
+    private String MenuId;
 
     public Article(long id, String title, String content, String menuId) {
         Id = id;

@@ -1,9 +1,9 @@
 package com.bootcamp.entity;
 
 public class Cart {
-    public long Id;
-    public double TotalAmount;
-    public String CustomerName;
+    private long Id;
+    private double TotalAmount;
+    private String CustomerName;
 
     public Cart(long id, double totalAmount, String customerName) {
         Id = id;

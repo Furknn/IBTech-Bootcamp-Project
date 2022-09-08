@@ -1,6 +1,7 @@
 package com.bootcamp.api.product;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,16 +17,16 @@ import com.bootcamp.manager.ProductManager;
 import com.bootcamp.utils.XmlHelper;
 import com.bootcamp.xml.ProductXmlManager;
 
-@WebServlet("/product")
-public class ProductServlet extends HttpServlet {
+@WebServlet("/products")
+public class ProductsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		long productId = Long.parseLong(request.getParameter("productid"));
+		long categoryId=Long.parseLong(request.getParameter("categoryid"));
 		ProductManager pm = new ProductManager();
-		Product product = pm.getById(productId);
+		List<Product> products = pm.getByCategory(categoryId);
 		ProductXmlManager productXmlManager = new ProductXmlManager();
-		Document document = productXmlManager.format(product);
+		Document document = productXmlManager.formatList(products);
 		response.setContentType("application/xml; charset=UTF-8");
 		try {
 			XmlHelper.dump(document, response.getOutputStream());
@@ -34,5 +35,4 @@ public class ProductServlet extends HttpServlet {
 		}
 
 	}
-
 }

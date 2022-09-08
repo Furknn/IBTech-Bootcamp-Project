@@ -1,9 +1,9 @@
 package com.bootcamp.entity;
 
 public class User {
-    public long Id;
-    public String Username;
-    public String Password;
+    private long Id;
+    private String Username;
+    private String Password;
 
     public User(long id, String username, String password) {
         Id = id;
