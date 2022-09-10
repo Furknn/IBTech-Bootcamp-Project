@@ -58,10 +58,10 @@ public class ProductManager extends BaseManager<Product> {
         }
     }
 
-    public boolean delete(Product t) {
+    public boolean delete(long id) {
         try {
             PreparedStatement statement = getConnection().prepareStatement("DELETE FROM product WHERE Id=?");
-            statement.setLong(1, t.getId());
+            statement.setLong(1, id);
             int affected = statement.executeUpdate();
             disconnect();
             return affected > 0;

@@ -1,13 +1,12 @@
 package com.bootcamp.admin.test;
 
-import com.bootcamp.entity.Category;
-import com.bootcamp.manager.CategoryManager;
+import com.bootcamp.manager.ProductManager;
 
 public class Test {
 	public static void main(String[] args) {
-		// get category with id=12
-		CategoryManager categoryManager = new CategoryManager();
-		Category category = categoryManager.getById(12);
-		System.out.println(category.getName());
+		// delete product with id = 9
+		ProductManager productManager = new ProductManager();
+		productManager.delete(9);
+
 	}
 }

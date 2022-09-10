@@ -57,10 +57,10 @@ public class CartManager extends BaseManager<Cart> {
 
     }
 
-    public boolean delete(Cart t) {
+    public boolean delete(long id) {
         try {
             PreparedStatement statement = getConnection().prepareStatement("DELETE FROM Cart WHERE id=?");
-            statement.setLong(1, t.getId());
+            statement.setLong(1, id);
             int affected = statement.executeUpdate();
             disconnect();
             return affected > 0;

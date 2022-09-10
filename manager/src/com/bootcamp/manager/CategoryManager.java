@@ -51,11 +51,11 @@ public class CategoryManager extends BaseManager<Category> {
 
     }
 
-    public boolean delete(Category t) {
+    public boolean delete(long id) {
 
         try {
             PreparedStatement statement = getConnection().prepareStatement("DELETE FROM Category WHERE Id=?");
-            statement.setLong(1, t.getId());
+            statement.setLong(1, id);
             int affected = statement.executeUpdate();
             disconnect();
             return affected > 0;
