@@ -98,6 +98,9 @@ public class CategoryManager extends BaseManager<Category> {
 
     public Category parse(ResultSet resultSet) {
         try {
+            if (resultSet.isBeforeFirst()) {
+                resultSet.next();
+            }
             return new Category(resultSet.getLong("Id"), resultSet.getString("Name"));
         } catch (SQLException e) {
 

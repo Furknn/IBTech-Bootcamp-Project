@@ -143,6 +143,9 @@ public class ProductManager extends BaseManager<Product> {
 
     public Product parse(ResultSet resultSet) {
         try {
+            if (resultSet.isBeforeFirst()) {
+                resultSet.next();
+            }
             return new Product(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getDouble("price"),
                     resultSet.getLong("categoryId"), resultSet.getString("imageUrl"));
         } catch (SQLException e) {

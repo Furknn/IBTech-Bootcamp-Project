@@ -105,6 +105,9 @@ public class CartProductManager extends BaseManager<CartProduct> {
 
     public CartProduct parse(ResultSet resultSet) {
         try {
+            if (resultSet.isBeforeFirst()) {
+                resultSet.next();
+            }
             return new CartProduct(resultSet.getLong("Id"), resultSet.getLong("CartId"),
                     resultSet.getLong("ProductId"),
                     resultSet.getInt("Quantity"), resultSet.getDouble("Price"));

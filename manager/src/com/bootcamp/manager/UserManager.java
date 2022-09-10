@@ -69,10 +69,15 @@ public class UserManager extends BaseManager<User> {
 
     @Override
     public User parse(ResultSet resultSet) throws SQLException {
-        User user = new User();
-        user.setId(resultSet.getLong("id"));
-        user.setUsername(resultSet.getString("username"));
-        user.setPassword(resultSet.getString("password"));
-        return user;
+        try {
+            if (resultSet.isBeforeFirst()) {
+                resultSet.next();
+            }
+            return new User(resultSet.getLong("id"), resultSet.getString("username"), resultSet.getString("password"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        
     }
 }

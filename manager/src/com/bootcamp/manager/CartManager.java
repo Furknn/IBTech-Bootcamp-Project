@@ -101,6 +101,9 @@ public class CartManager extends BaseManager<Cart> {
     @Override
     public Cart parse(ResultSet resultSet) {
         try {
+            if (resultSet.isBeforeFirst()) {
+                resultSet.next();
+            }
             return new Cart(resultSet.getLong("id"), resultSet.getDouble("totalAmount"),
                     resultSet.getString("customerName"));
         } catch (SQLException e) {
