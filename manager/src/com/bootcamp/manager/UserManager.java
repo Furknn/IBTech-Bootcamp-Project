@@ -8,6 +8,13 @@ import java.util.List;
 import com.bootcamp.entity.User;
 
 public class UserManager extends BaseManager<User> {
+    private static UserManager instance = null;
+    public static UserManager getInstance() {
+        if (instance == null) {
+            instance = new UserManager();
+        }
+        return instance;
+    }
 
     public User create(User t) throws SQLException {
         try {

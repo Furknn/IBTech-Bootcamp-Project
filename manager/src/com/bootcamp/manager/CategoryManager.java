@@ -8,6 +8,13 @@ import java.util.List;
 import com.bootcamp.entity.Category;
 
 public class CategoryManager extends BaseManager<Category> {
+    private static CategoryManager instance = null;
+    public static CategoryManager getInstance() {
+        if (instance == null) {
+            instance = new CategoryManager();
+        }
+        return instance;
+    }
 
     public Category create(Category t) {
 

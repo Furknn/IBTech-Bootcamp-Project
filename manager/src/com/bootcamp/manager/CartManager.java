@@ -8,6 +8,13 @@ import java.util.List;
 import com.bootcamp.entity.Cart;
 
 public class CartManager extends BaseManager<Cart> {
+    private static CartManager instance = null;
+    public static CartManager getInstance() {
+        if (instance == null) {
+            instance = new CartManager();
+        }
+        return instance;
+    }
 
     public Cart create(Cart t) {
         try {

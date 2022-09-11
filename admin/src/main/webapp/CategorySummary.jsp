@@ -4,16 +4,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	// get categories
-	CategoryManager cm = new CategoryManager();
-	List<Category> categories = cm.getAll();
-	String deletedCategoryId = request.getParameter("deleted");
-	if (deletedCategoryId != null) {
-		Category category = new Category();
-		cm.delete(Long.parseLong(deletedCategoryId));
-		categories = cm.getAll();
-	
-	}
+// get categories
+CategoryManager cm = CategoryManager.getInstance();
+List<Category> categories = cm.getAll();
+String deletedCategoryId = request.getParameter("deleted");
+if (deletedCategoryId != null) {
+	Category category = new Category();
+	cm.delete(Long.parseLong(deletedCategoryId));
+	categories = cm.getAll();
+}
 %>
 
 <!DOCTYPE html>
@@ -23,7 +22,8 @@
 <title>Category Summary</title>
 </head>
 <body>
-	<div style="width: 100%;">
+	<a href="/admin/AdminPage.jsp"><input type="button" value="back"></a>
+	<div style="width: 100%; float: left;">
 		<div style="float: left; width: 50%">
 			<h3>Category Summary</h3>
 			<form name="tableForm" action="#">
@@ -39,12 +39,14 @@
 					for (Category category : categories) {
 						String categoryID = String.valueOf(category.getId());
 						String categoryName = category.getName();
-						String categoryLink = String.valueOf("/admin/CategorySummary.jsp?id=" + categoryID);
+						String categoryLink = String.valueOf("/admin/CategoryDetail.jsp?id=" + categoryID);
 					%>
 					<tr>
 						<td><%=categoryID%></td>
 						<td><%=categoryName%></td>
-						<td><button>details</button></td>
+						<td><a href="<%=categoryLink%>"> <input type="button"
+								value="detail">
+						</a></td>
 						<td><input type="button" value="delete"
 							onclick="{document.tableForm.deleted.value=<%=categoryID%>;tableForm.submit();}"></td>
 					</tr>
@@ -58,7 +60,7 @@
 
 		</div>
 		<div style="float: left;">
-		<h3>Category Create</h3>
+			<h3>Category Create</h3>
 			<form action="#">
 				<label>Category Name</label><br /> <input type="text"
 					name="categoryname"> <input type="submit" value="add">

@@ -9,6 +9,13 @@ import java.util.List;
 import com.bootcamp.entity.Product;
 
 public class ProductManager extends BaseManager<Product> {
+    private static ProductManager instance = null;
+    public static ProductManager getInstance() {
+        if (instance == null) {
+            instance = new ProductManager();
+        }
+        return instance;
+    }
 
     public Product create(Product t) {
         try {

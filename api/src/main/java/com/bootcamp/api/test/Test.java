@@ -2,7 +2,6 @@ package com.bootcamp.api.test;
 
 import java.util.List;
 
-
 import com.bootcamp.entity.Category;
 import com.bootcamp.entity.Product;
 import com.bootcamp.manager.CategoryManager;
@@ -15,16 +14,13 @@ public class Test {
 		ProductManager pm=new ProductManager();
 		List<Category> categories = cm.getAll();
 		for (Category category : categories) {
-			
 			for (int i = 0; i < 10; i++) {
 				Product product = new Product();
 			product.setCategoryId(category.getId());
 			product.setName("Product " + i  +category.getName());
 			product.setPrice(1000);
-			
 				pm.create(product);
 			}
-
 		}
 	}
 }

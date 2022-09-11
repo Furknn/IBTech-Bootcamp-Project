@@ -6,8 +6,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-ProductManager pm = new ProductManager();
-CategoryManager cm = new CategoryManager();
+ProductManager pm = ProductManager.getInstance();
+CategoryManager cm = CategoryManager.getInstance();
 List<Product> products = pm.getAll();
 String deletedProductId = request.getParameter("deleted");
 if (deletedProductId != null) {
@@ -24,11 +24,10 @@ if (deletedProductId != null) {
 <title>Product Summary</title>
 </head>
 <body>
-	<h3>Product Summary</h3>
-
+	<a href="/admin/AdminPage.jsp"><input type="button" value="back"></a>
 	<div style="width: 100%;">
 		<div style="float: left; width: 50%">
-
+			<h3>Product Summary</h3>
 			<%
 			if (deletedProductId != null) {
 			%>
@@ -81,7 +80,14 @@ if (deletedProductId != null) {
 			</form>
 			<br />
 		</div>
-		<div style="float: left;"></div>
+		<div style="float: left;">
+			<form name="productForm" action="#">
+				<input type="hidden" name="added"> <input type="text"
+					name="productName"> <input type="submit" value="add"
+					onclick="">
+
+			</form>
+		</div>
 	</div>
 	<div style="clear: both"></div>
 

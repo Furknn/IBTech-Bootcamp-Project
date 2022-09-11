@@ -22,7 +22,7 @@ public class ProductServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		long productId = Long.parseLong(request.getParameter("productid"));
-		ProductManager pm = new ProductManager();
+		ProductManager pm = ProductManager.getInstance();
 		Product product = pm.getById(productId);
 		ProductXmlManager productXmlManager = ProductXmlManager.getInstance();
 		Document document = productXmlManager.format(product);
