@@ -32,11 +32,7 @@ public abstract class BaseXmlManager<T> {
         return element;
     }
 
-    public T parse(Document document){
-        return parse(document, 0);
-    }
-
-    protected abstract T parse(Document document, int index);
+    public abstract T parse(Document document);
 
     public Document formatList(List<T> list) {
         Document document;

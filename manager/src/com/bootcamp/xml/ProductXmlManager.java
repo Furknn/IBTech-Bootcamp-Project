@@ -1,15 +1,23 @@
 package com.bootcamp.xml;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.bootcamp.entity.Product;
 
 public class ProductXmlManager extends BaseXmlManager<Product> {
+
+    private static ProductXmlManager instance=null;
+    public static ProductXmlManager getInstance() {
+        if (instance == null) {
+            instance = new ProductXmlManager();
+        }
+        return instance;
+    }
 
     @Override
     protected Node format(Document document, Product t) {
@@ -23,13 +31,13 @@ public class ProductXmlManager extends BaseXmlManager<Product> {
     }
 
     @Override
-    protected Product parse(Document document, int index) {
+    public Product parse(Document document) {
         Element element = document.getDocumentElement();
         long id = Long.parseLong(element.getAttribute("id"));
-        String name = element.getElementsByTagName("name").item(index).getTextContent();
-        double price = Double.parseDouble(element.getElementsByTagName("price").item(index).getTextContent());
-        long categoryId = Long.parseLong(element.getElementsByTagName("categoryid").item(index).getTextContent());
-        String imageUrl = element.getElementsByTagName("imageurl").item(index).getTextContent();
+        String name = element.getElementsByTagName("name").item(0).getTextContent();
+        double price = Double.parseDouble(element.getElementsByTagName("price").item(0).getTextContent());
+        long categoryId = Long.parseLong(element.getElementsByTagName("categoryid").item(0).getTextContent());
+        String imageUrl = element.getElementsByTagName("imageurl").item(0).getTextContent();
         return new Product(id, name, price, categoryId, imageUrl);
     }
 
@@ -45,10 +53,19 @@ public class ProductXmlManager extends BaseXmlManager<Product> {
     @Override
     public List<Product> parseList(Document document) {
         List<Product> products = new ArrayList<>();
-        for (int i = 0; i < document.getElementsByTagName("product").getLength(); i++) {
-            products.add(parse(document, i));
+        NodeList nodeList = document.getDocumentElement().getChildNodes();
+
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Element element = (Element) nodeList.item(i);
+            long id = Long.parseLong(element.getAttribute("id"));
+            String name = element.getElementsByTagName("name").item(0).getTextContent();
+            double price = Double.parseDouble(element.getElementsByTagName("price").item(0).getTextContent());
+            long categoryId = Long.parseLong(element.getElementsByTagName("categoryid").item(0).getTextContent());
+            Node image= element.getElementsByTagName("imageurl").item(0);
+            String imageUrl = image==null?"":image.getTextContent();
+            products.add(new Product(id, name, price, categoryId, imageUrl));
         }
+
         return products;
     }
-
 }

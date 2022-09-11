@@ -25,7 +25,7 @@ public class ProductsServlet extends HttpServlet {
 		long categoryId=Long.parseLong(request.getParameter("categoryid"));
 		ProductManager pm = new ProductManager();
 		List<Product> products = pm.getByCategory(categoryId);
-		ProductXmlManager productXmlManager = new ProductXmlManager();
+		ProductXmlManager productXmlManager =ProductXmlManager.getInstance();
 		Document document = productXmlManager.formatList(products);
 		response.setContentType("application/xml; charset=UTF-8");
 		try {
