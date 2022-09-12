@@ -26,7 +26,7 @@ public class ProductXmlManager extends BaseXmlManager<Product> {
         element.appendChild(createElement(document, "name", t.getName()));
         element.appendChild(createElement(document, "price", String.valueOf(t.getPrice())));
         element.appendChild(createElement(document, "categoryid", String.valueOf(t.getCategoryId())));
-        element.appendChild(createElement(document, "imageUrl", t.getImageUrl()));
+        element.appendChild(createElement(document, "imageurl", t.getImageUrl()));
         return element;
     }
 

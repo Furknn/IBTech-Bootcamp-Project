@@ -17,14 +17,6 @@ import com.bootcamp.xml.CategoryXmlManager;
 public class CategoryClient {
     private static final String url ="http://localhost:8080/api/categories";
 
-    private static CategoryClient instance = null;
-    public static CategoryClient getInstance() {
-        if (instance == null) {
-            instance = new CategoryClient();
-        }
-        return instance;
-    }
-
     public static List<Category> getAll() {
         InputStream in = WebHelper.get(url);
         try {

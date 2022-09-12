@@ -17,15 +17,7 @@ import com.bootcamp.xml.ProductXmlManager;
 public class ProductClient {
     private static final String productsUrl = "http://localhost:8080/api/products";
     private static final String productUrl = "http://localhost:8080/api/product";
-
-    private static ProductClient instance = null;
-    public static ProductClient getInstance() {
-        if (instance == null) {
-            instance = new ProductClient();
-        }
-        return instance;
-    }
-
+    
     public static List<Product> getByCategoryId(long categoryId) {
         String url = productsUrl + "?categoryid=" + categoryId;
         InputStream in = WebHelper.get(url);

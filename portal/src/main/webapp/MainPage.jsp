@@ -1,11 +1,14 @@
-<%@page import="com.bootcamp.manager.CategoryManager"%>
+<%@page import="com.bootcamp.portal.CategoryClient"%>
+<%@page import="com.bootcamp.portal.ProductClient"%>
 <%@page import="com.bootcamp.entity.Category"%>
+<%@page import="com.bootcamp.entity.Product"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-    CategoryManager categoryManager = CategoryManager.getInstance();
-    List<Category> categories = categoryManager.getAll();
+List<Category> categories = CategoryClient.getAll();
+List<Product> products = ProductClient.getByCategoryId(categories.get(0).getId());
+products = products.subList(0, 8);
 %>
 <!DOCTYPE html>
 <html>
@@ -15,48 +18,33 @@
 <title>Main Page</title>
 </head>
 <body>
-	<nav class="navbar">
-		<div class="nav">
-			<h3>Bootcamp Store</h3>
-			<div class="nav-items">
 
-				<a href="#"><img width="10px"
-					src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
-					alt=""></a> <a href="#"><img width="10px"
-					src="https://cdn-icons-png.flaticon.com/512/3144/3144456.png"
-					alt=""></a>
-			</div>
-		</div>
-
-		<ul class="links-container">
-
-			<% for (Category category : categories) { %>
-			<li class="link-item"><a href="#" class="link"><%=category.getName()%></a></li>
-			<%} %>
-		</ul>
-
-	</nav>
-
+	<jsp:include page="./common/Navigator.jsp"></jsp:include>
 	<section class="product">
 		<h2 class="product-category">best selling</h2>
-		
+
 		<div class="product-container">
-		<% for(int i=0;i<7;i++){ %>
+			<%
+			for (Product product : products) {
+			%>
 			<div class="product-card">
-				<div class="product-image">
-					<span class="discount-tag">50% off</span> 
-					<img src="https://images.arcteryx.com/S22/1350x1710/Acrople-Jacket-Canvas.jpg" class="product-thumb" alt="">
-					<button class="card-btn">add to whislist</button>
-				</div>
-				<div class="product-info">
-					<h2 class="product-brand">brand</h2>
-					<p class="product-short-des">a short line about the cloth..</p>
-					<span class="price">$20</span><span class="actual-price">$40</span>
-				</div>
+				<a style="all: unset"
+					href="/portal/ProductView.jsp?id=<%=product.getId()%>">
+					<div class="product-image">
+						<img src="<%=product.getImageUrl()%>" class="product-thumb" alt="">
+					</div>
+					<div class="product-info">
+						<h2 class="product-brand"><%=product.getName()%></h2>
+						<p class="product-short-des">a short line about the cloth..</p>
+						<span class="price"><%=product.getPrice()%> TL</span>
+					</div>
+				</a>
 			</div>
-			<%} %>
+			<%
+			}
+			%>
 		</div>
-		
+
 	</section>
 
 
