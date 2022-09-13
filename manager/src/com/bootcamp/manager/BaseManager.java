@@ -23,6 +23,12 @@ public abstract class BaseManager<T> {
         this("jdbc:postgresql://localhost:5432/bootcampproject", "sa", "123321xp");
     }
 
+    public abstract T create(T t);
+    public abstract T update(T t);
+    public abstract boolean delete(long id);
+    public abstract List<T> getAll();
+    public abstract T getById(long id);
+
     public abstract T parse(ResultSet resultSet) throws SQLException;
 
     public List<T> parseList(ResultSet resultSet) throws SQLException {

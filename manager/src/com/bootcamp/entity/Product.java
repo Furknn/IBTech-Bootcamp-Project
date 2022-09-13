@@ -6,13 +6,15 @@ public class Product {
     private double Price;
     private long CategoryId;
     private String ImageUrl;
+    private String Detail;
 
-    public Product(long id, String name, double price, long categoryId, String imageUrl) {
+    public Product(long id, String name, double price, long categoryId, String imageUrl, String detail) {
         Id = id;
         Name = name;
         Price = price;
         CategoryId = categoryId;
         ImageUrl = imageUrl;
+        Detail = detail;
     }
 
     public Product() {
@@ -56,6 +58,14 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         ImageUrl = imageUrl;
+    }
+
+    public String getDetail() {
+        return Detail;
+    }
+
+    public void setDetail(String detail) {
+        Detail = detail;
     }
 
 }

@@ -20,8 +20,9 @@ public class CategoryManager extends BaseManager<Category> {
 
         try {
             String[] returnId = { "id" };
-            PreparedStatement statement = getConnection().prepareStatement("INSERT INTO category (name) VALUES (?)", returnId);
+            PreparedStatement statement = getConnection().prepareStatement("INSERT INTO category (name,detail) VALUES (?,?)", returnId);
             statement.setString(1, t.getName());
+            statement.setString(2, t.getDetail());
             int affected = statement.executeUpdate();
             if (affected > 0) {
                 ResultSet rs = statement.getGeneratedKeys();
@@ -42,9 +43,10 @@ public class CategoryManager extends BaseManager<Category> {
 
     public Category update(Category t) {
         try {
-            PreparedStatement statement = getConnection().prepareStatement("UPDATE category SET name=? WHERE id=?");
+            PreparedStatement statement = getConnection().prepareStatement("UPDATE category SET name=?, detail=? WHERE id=?");
             statement.setString(1, t.getName());
-            statement.setLong(2, t.getId());
+            statement.setString(2, t.getDetail());
+            statement.setLong(3, t.getId());
             int affected = statement.executeUpdate();
             if (affected <= 0) {
                 t = null;
@@ -108,7 +110,7 @@ public class CategoryManager extends BaseManager<Category> {
             if (resultSet.isBeforeFirst()) {
                 resultSet.next();
             }
-            return new Category(resultSet.getLong("Id"), resultSet.getString("Name"));
+            return new Category(resultSet.getLong("Id"), resultSet.getString("Name"), resultSet.getString("Detail"));
         } catch (SQLException e) {
 
             e.printStackTrace();

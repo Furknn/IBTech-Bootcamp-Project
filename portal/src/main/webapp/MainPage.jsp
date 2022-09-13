@@ -8,7 +8,8 @@
 <%
 List<Category> categories = CategoryClient.getAll();
 List<Product> products = ProductClient.getByCategoryId(categories.get(0).getId());
-products = products.subList(0, 8);
+
+products = products.subList(0, products.size()<8?products.size():8);
 %>
 <!DOCTYPE html>
 <html>
@@ -35,7 +36,8 @@ products = products.subList(0, 8);
 					</div>
 					<div class="product-info">
 						<h2 class="product-brand"><%=product.getName()%></h2>
-						<p class="product-short-des">a short line about the cloth..</p>
+						<%String detail=product.getDetail(); %>
+						<p class="product-short-des"><%=product.getDetail().substring(0,detail.length()>20?20:detail.length())+"..."%></p>
 						<span class="price"><%=product.getPrice()%> TL</span>
 					</div>
 				</a>

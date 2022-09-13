@@ -9,6 +9,7 @@ import com.bootcamp.entity.User;
 
 public class UserManager extends BaseManager<User> {
     private static UserManager instance = null;
+
     public static UserManager getInstance() {
         if (instance == null) {
             instance = new UserManager();
@@ -16,7 +17,7 @@ public class UserManager extends BaseManager<User> {
         return instance;
     }
 
-    public User create(User t) throws SQLException {
+    public User create(User t) {
         try {
             String[] returnId = { "id" };
             PreparedStatement statement = getConnection().prepareStatement(
@@ -42,7 +43,7 @@ public class UserManager extends BaseManager<User> {
 
     }
 
-    public User update(User t) throws SQLException {
+    public User update(User t) {
         try {
             PreparedStatement statement = getConnection()
                     .prepareStatement("UPDATE \"user\" SET username=?,password=? WHERE id=?");
@@ -62,7 +63,7 @@ public class UserManager extends BaseManager<User> {
 
     }
 
-    public boolean delete(long id) throws SQLException {
+    public boolean delete(long id) {
         try {
             PreparedStatement statement = getConnection().prepareStatement("DELETE FROM \"user\" WHERE id=?");
             statement.setLong(1, id);
@@ -76,7 +77,7 @@ public class UserManager extends BaseManager<User> {
 
     }
 
-    public User getById(long id) throws SQLException {
+    public User getById(long id) {
         try {
             PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM \"user\" WHERE id=?");
             statement.setLong(1, id);
@@ -92,7 +93,7 @@ public class UserManager extends BaseManager<User> {
 
     }
 
-    public List<User> getAll() throws SQLException {
+    public List<User> getAll() {
         try {
             PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM \"user\"");
             ResultSet result = statement.executeQuery();

@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.product{
+	position: relative;
+    overflow: hidden;
+    padding: 20px 0;
+}

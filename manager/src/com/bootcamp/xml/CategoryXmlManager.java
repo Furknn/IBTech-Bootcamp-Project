@@ -23,6 +23,7 @@ public class CategoryXmlManager extends BaseXmlManager<Category> {
         Element element = document.createElement("category");
         element.setAttribute("id", String.valueOf(category.getId()));
         element.appendChild(createElement(document, "name", category.getName()));
+        element.appendChild(createElement(document, "detail", category.getDetail()));
         return element;
     }
 
@@ -39,7 +40,8 @@ public class CategoryXmlManager extends BaseXmlManager<Category> {
         Element element = document.getDocumentElement();
         long id = Long.parseLong(element.getAttribute("id"));
         String name = element.getElementsByTagName("name").item(0).getTextContent();
-        return new Category(id, name);
+        String detail = element.getElementsByTagName("detail").item(0).getTextContent();
+        return new Category(id, name, detail);
     }
 
     @Override
@@ -51,7 +53,8 @@ public class CategoryXmlManager extends BaseXmlManager<Category> {
             Element element = (Element) nodeList.item(i);
             long id = Long.parseLong(element.getAttribute("id"));
             String name = element.getElementsByTagName("name").item(0).getTextContent();
-            categories.add(new Category(id, name));
+            String detail = element.getElementsByTagName("detail").item(0).getTextContent();
+            categories.add(new Category(id, name, detail));
         }
 
         return categories;

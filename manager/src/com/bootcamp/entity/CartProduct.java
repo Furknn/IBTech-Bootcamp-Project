@@ -6,16 +6,21 @@ public class CartProduct {
     private long ProductId;
     private int Quantity;
     private double Price;
+    private double TaxRate;
+    private double LineAmount;
+
 
     public CartProduct() {
     }
 
-    public CartProduct(long id, long cartId, long productId, int quantity, double price) {
+    public CartProduct(long id, long cartId, long productId, int quantity, double price, double taxRate, double lineAmount) {
         Id = id;
         CartId = cartId;
         ProductId = productId;
         Quantity = quantity;
         Price = price;
+        TaxRate = taxRate;
+        LineAmount = lineAmount;
     }
 
     public long getId() {
@@ -58,4 +63,19 @@ public class CartProduct {
         Price = price;
     }
 
+    public double getTaxRate() {
+        return TaxRate;
+    }
+
+    public void setTaxRate(double taxRate) {
+        TaxRate = taxRate;
+    }
+
+    public double getLineAmount() {
+        return LineAmount;
+    }
+
+    public void setLineAmount(double lineAmount) {
+        LineAmount = lineAmount;
+    }
 }

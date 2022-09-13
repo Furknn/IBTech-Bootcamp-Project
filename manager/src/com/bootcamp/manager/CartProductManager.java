@@ -9,6 +9,7 @@ import com.bootcamp.entity.CartProduct;
 
 public class CartProductManager extends BaseManager<CartProduct> {
     private static CartProductManager instance = null;
+
     public static CartProductManager getInstance() {
         if (instance == null) {
             instance = new CartProductManager();
@@ -20,11 +21,13 @@ public class CartProductManager extends BaseManager<CartProduct> {
         try {
             String[] returnId = { "id" };
             PreparedStatement statement = getConnection().prepareStatement(
-                    "INSERT INTO cartproduct (cartid,productid,quantity,price) VALUES (?,?,?,?)", returnId);
+                    "INSERT INTO cartproduct (cartid,productid,quantity,price) VALUES (?,?,?,?,?,?)", returnId);
             statement.setLong(1, t.getCartId());
             statement.setLong(2, t.getProductId());
             statement.setInt(3, t.getQuantity());
             statement.setDouble(4, t.getPrice());
+            statement.setDouble(5, t.getTaxRate());
+            statement.setDouble(6, t.getLineAmount());
             int affected = statement.executeUpdate();
             if (affected > 0) {
                 ResultSet rs = statement.getGeneratedKeys();
@@ -47,12 +50,15 @@ public class CartProductManager extends BaseManager<CartProduct> {
 
         try {
             PreparedStatement statement = getConnection()
-                    .prepareStatement("UPDATE cartproduct SET cartid=?,productid=?,quantity=?,price=? WHERE id=?");
+                    .prepareStatement(
+                            "UPDATE cartproduct SET cartid=?,productid=?,quantity=?,price=?,taxrate=?,lineamount=? WHERE id=?");
             statement.setLong(1, t.getCartId());
             statement.setLong(2, t.getProductId());
             statement.setInt(3, t.getQuantity());
             statement.setDouble(4, t.getPrice());
-            statement.setLong(5, t.getId());
+            statement.setDouble(5, t.getTaxRate());
+            statement.setDouble(6, t.getLineAmount());
+            statement.setLong(7, t.getId());
             int affected = statement.executeUpdate();
             if (affected <= 0) {
                 t = null;
@@ -95,6 +101,20 @@ public class CartProductManager extends BaseManager<CartProduct> {
 
     }
 
+    public List<CartProduct> getByCartId(long cartId){
+        try {
+            PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM CartProduct WHERE cartid=?");
+            statement.setLong(1, cartId);
+            ResultSet result = statement.executeQuery();
+            List<CartProduct> cartProducts = parseList(result);
+            disconnect();
+            return cartProducts;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public List<CartProduct> getAll() {
         try {
 
@@ -117,7 +137,8 @@ public class CartProductManager extends BaseManager<CartProduct> {
             }
             return new CartProduct(resultSet.getLong("Id"), resultSet.getLong("CartId"),
                     resultSet.getLong("ProductId"),
-                    resultSet.getInt("Quantity"), resultSet.getDouble("Price"));
+                    resultSet.getInt("Quantity"), resultSet.getDouble("Price"), resultSet.getDouble("TaxRate"),
+                    resultSet.getDouble("LineAmount"));
         } catch (SQLException e) {
 
             e.printStackTrace();

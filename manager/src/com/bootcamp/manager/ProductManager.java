@@ -21,11 +21,12 @@ public class ProductManager extends BaseManager<Product> {
         try {
             String[] returnId = { "id" };
             PreparedStatement statement = getConnection()
-                    .prepareStatement("INSERT INTO product (name, price, categoryid, imageUrl) VALUES (?, ?, ?, ?)", returnId);
+                    .prepareStatement("INSERT INTO product (name, price, categoryid, imageUrl,detail) VALUES (?, ?, ?, ?)", returnId);
             statement.setString(1, t.getName());
             statement.setDouble(2, t.getPrice());
             statement.setLong(3, t.getCategoryId());
             statement.setString(4, t.getImageUrl());
+            statement.setString(5, t.getDetail());
             int affected = statement.executeUpdate();
             if (affected > 0) {
                 ResultSet rs = statement.getGeneratedKeys();
@@ -47,12 +48,13 @@ public class ProductManager extends BaseManager<Product> {
     public Product update(Product t) {
         try {
             PreparedStatement statement = getConnection()
-                    .prepareStatement("UPDATE product SET name=?, price=?, categoryid=?, imageUrl=? WHERE id=?");
+                    .prepareStatement("UPDATE product SET name=?, price=?, categoryid=?, imageUrl=?, detail=? WHERE id=?");
             statement.setString(1, t.getName());
             statement.setDouble(2, t.getPrice());
             statement.setLong(3, t.getCategoryId());
             statement.setString(4, t.getImageUrl());
-            statement.setLong(5, t.getId());
+            statement.setString(5, t.getDetail());
+            statement.setLong(6, t.getId());
             int affected = statement.executeUpdate();
             if (affected <= 0) {
                 t = null;
@@ -92,6 +94,7 @@ public class ProductManager extends BaseManager<Product> {
                 product.setPrice(result.getDouble("price"));
                 product.setCategoryId(result.getLong("categoryid"));
                 product.setImageUrl(result.getString("imageurl"));
+                product.setDetail(result.getString("detail"));
             }
             disconnect();
             return product;
@@ -115,6 +118,7 @@ public class ProductManager extends BaseManager<Product> {
                 product.setPrice(result.getDouble("price"));
                 product.setCategoryId(result.getLong("categoryid"));
                 product.setImageUrl(result.getString("imageurl"));
+                product.setDetail(result.getString("detail"));
                 products.add(product);
             }
             disconnect();
@@ -138,6 +142,7 @@ public class ProductManager extends BaseManager<Product> {
                 product.setPrice(result.getDouble("price"));
                 product.setCategoryId(result.getLong("categoryid"));
                 product.setImageUrl(result.getString("imageurl"));
+                product.setDetail(result.getString("detail"));
                 products.add(product);
             }
             disconnect();
@@ -154,7 +159,7 @@ public class ProductManager extends BaseManager<Product> {
                 resultSet.next();
             }
             return new Product(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getDouble("price"),
-                    resultSet.getLong("categoryId"), resultSet.getString("imageUrl"));
+                    resultSet.getLong("categoryId"), resultSet.getString("imageUrl"), resultSet.getString("detail"));
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
