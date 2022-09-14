@@ -1,33 +1,31 @@
 package com.bootcamp.api.cart;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class CartRemoveServlet
- */
+import com.bootcamp.manager.CartManager;
+import com.bootcamp.manager.CartProductManager;
+
+
 @WebServlet("/cart/remove")
 public class CartRemoveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CartRemoveServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		long cartId = Long.parseLong(request.getParameter("cartproductid"));
+		CartProductManager.getInstance().delete(cartId);
+
+		if (CartManager.getInstance().getById(cartId) == null) {
+			response.getWriter().append("Cart product removed");
+			response.setStatus(200);
+		} else {
+			response.getWriter().append("Cart product not removed");
+			response.setStatus(500);
+		}
 	}
 
 }

@@ -1,4 +1,5 @@
 package com.bootcamp.xml;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,8 @@ import com.bootcamp.entity.Product;
 
 public class ProductXmlManager extends BaseXmlManager<Product> {
 
-    private static ProductXmlManager instance=null;
+    private static ProductXmlManager instance = null;
+
     public static ProductXmlManager getInstance() {
         if (instance == null) {
             instance = new ProductXmlManager();
@@ -63,8 +65,8 @@ public class ProductXmlManager extends BaseXmlManager<Product> {
             String name = element.getElementsByTagName("name").item(0).getTextContent();
             double price = Double.parseDouble(element.getElementsByTagName("price").item(0).getTextContent());
             long categoryId = Long.parseLong(element.getElementsByTagName("categoryid").item(0).getTextContent());
-            Node image= element.getElementsByTagName("imageurl").item(0);
-            String imageUrl = image==null?"":image.getTextContent();
+            Node image = element.getElementsByTagName("imageurl").item(0);
+            String imageUrl = image == null ? "" : image.getTextContent();
             String detail = element.getElementsByTagName("detail").item(0).getTextContent();
             products.add(new Product(id, name, price, categoryId, imageUrl, detail));
         }

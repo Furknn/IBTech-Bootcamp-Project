@@ -12,7 +12,8 @@ import com.bootcamp.entity.User;
 
 public class UserXmlManager extends BaseXmlManager<User> {
 
-    private static UserXmlManager instance=null;
+    private static UserXmlManager instance = null;
+
     public static UserXmlManager getInstance() {
         if (instance == null) {
             instance = new UserXmlManager();

@@ -11,7 +11,8 @@ import com.bootcamp.entity.Category;
 
 public class CategoryXmlManager extends BaseXmlManager<Category> {
 
-    private static CategoryXmlManager instance=null;
+    private static CategoryXmlManager instance = null;
+
     public static CategoryXmlManager getInstance() {
         if (instance == null) {
             instance = new CategoryXmlManager();

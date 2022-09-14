@@ -30,8 +30,10 @@ public class CategoryServlet extends HttpServlet {
 		response.setContentType("application/xml; charset=UTF-8");
 		try {
 			XmlHelper.dump(document, response.getOutputStream());
+			response.setStatus(200);
 		} catch (TransformerException | IOException e) {
 			e.printStackTrace();
+			response.setStatus(500);
 		}
 
 	}
