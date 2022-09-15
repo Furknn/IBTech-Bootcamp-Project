@@ -32,7 +32,18 @@ public class CartAddServlet extends HttpServlet {
 			return;
 		}
 		CartProduct cartProduct = CartProductXmlManager.getInstance().parse(document);
+		if (cartProduct == null) {
+			response.getWriter().append("CartProduct is null");
+			response.setStatus(400);
+			return;
+		}
 		cartProduct = CartProductManager.getInstance().create(cartProduct);
+		if (cartProduct == null){
+			response.getWriter().append("CartProduct not created");
+			response.setStatus(500);
+			return;
+		}
+
 		document = CartProductXmlManager.getInstance().format(cartProduct);
 		response.setContentType("application/xml; charset=UTF-8");
 		try {

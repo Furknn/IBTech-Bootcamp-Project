@@ -21,10 +21,8 @@ public class CartCreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("name");
-		
 		if(name==null)
 			name="nameless";
-		
 		Cart cart = new Cart();
 		cart.setCustomerName(name);
 		cart.setTotalAmount(0.0);

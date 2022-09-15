@@ -21,7 +21,7 @@ public class CartProductManager extends BaseManager<CartProduct> {
         try {
             String[] returnId = { "id" };
             PreparedStatement statement = getConnection().prepareStatement(
-                    "INSERT INTO cartproduct (cartid,productid,quantity,price) VALUES (?,?,?,?,?,?)", returnId);
+                    "INSERT INTO cartproduct (cartid,productid,quantity,price,taxrate,lineamount) VALUES (?,?,?,?,?,?)", returnId);
             statement.setLong(1, t.getCartId());
             statement.setLong(2, t.getProductId());
             statement.setInt(3, t.getQuantity());
@@ -135,10 +135,10 @@ public class CartProductManager extends BaseManager<CartProduct> {
             if (resultSet.isBeforeFirst()) {
                 resultSet.next();
             }
-            return new CartProduct(resultSet.getLong("Id"), resultSet.getLong("CartId"),
-                    resultSet.getLong("ProductId"),
-                    resultSet.getInt("Quantity"), resultSet.getDouble("Price"), resultSet.getDouble("TaxRate"),
-                    resultSet.getDouble("LineAmount"));
+            return new CartProduct(resultSet.getLong("id"), resultSet.getLong("cartid"),
+                    resultSet.getLong("productid"),
+                    resultSet.getInt("quantity"), resultSet.getDouble("price"), resultSet.getDouble("taxrate"),
+                    resultSet.getDouble("lineamount"));
         } catch (SQLException e) {
 
             e.printStackTrace();

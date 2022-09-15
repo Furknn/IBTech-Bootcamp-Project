@@ -120,4 +120,19 @@ public class UserManager extends BaseManager<User> {
         }
 
     }
+
+    public boolean check(User loggedUser) {
+        try {
+            PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM \"user\" WHERE username=? AND password=?");
+            statement.setString(1, loggedUser.getUsername());
+            statement.setString(2, loggedUser.getPassword());
+            ResultSet result = statement.executeQuery();
+            boolean isLogged = result.isBeforeFirst();
+            disconnect();
+            return isLogged;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
