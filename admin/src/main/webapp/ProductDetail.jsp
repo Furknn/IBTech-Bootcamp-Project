@@ -21,6 +21,7 @@ Category productCategory = cm.getById(product.getCategoryId());
 	<a href="/admin/ProductSummary.jsp"><input type="button"
 		value="back"></a>
 	<h3>Product Detail</h3>
+	</br>
 	<h5>
 		Name =
 		<%=product.getName()%></h5>
@@ -33,6 +34,6 @@ Category productCategory = cm.getById(product.getCategoryId());
 	<p>
 		category =
 		<%=productCategory.getName()%></p>
-	<img alt="" src="<%=product.getImageUrl()%>">
+	<img src="<%=product.getImageUrl()%>">
 </body>
 </html>

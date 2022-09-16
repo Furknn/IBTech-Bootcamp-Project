@@ -11,6 +11,7 @@
 <h1>Admin</h1>
 <a href="/admin/CategorySummary.jsp">Category Summary</a>
 <a href="/admin/ProductSummary.jsp">Product Summary</a>
-
+<a href="/admin/CartSummary.jsp">Cart Summary</a>
+<a href="/admin/UserSummary.jsp">User Summary</a>
 </body>
 </html>

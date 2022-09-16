@@ -65,7 +65,7 @@ if (deletedProductId != null) {
 						<td><%=productName%></td>
 						<td><%=productPrice%></td>
 						<td><%=productCategory%></td>
-						<td><img alt="" src="<%=ProductImageUrl%>"></td>
+						<td><img alt="" src="<%=ProductImageUrl%>" style="max-height: 50px; width: auto" > </td>
 						<td><a href="<%=productLink%>"><input type="button"
 								value="detail"></a></td>
 						<td><input type="button" value="delete"
