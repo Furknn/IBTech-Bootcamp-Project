@@ -6,14 +6,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-		boolean redirectToLogin = false;
-		String username = session.getAttribute("username")!=null? String.valueOf(session.getAttribute("username")):null;
-		String password = session.getAttribute("password")!=null?String.valueOf(session.getAttribute("password")):null;
-		long cartId= session.getAttribute("cartid")!=null?(long)session.getAttribute("cartid"):0;
-		if(username==null ||password==null){
-			redirectToLogin = true;
+		boolean redirectToLogin = true;
+		String username = (String)session.getAttribute("username");
+		String password =(String) session.getAttribute("password");
+		
+		if(username!=null ||password!=null){
+			redirectToLogin = false;
 		}
 		
+		long cartId= session.getAttribute("cartid")!=null?(long)session.getAttribute("cartid"):0;
 		List<Category> categories = CategoryClient.getAll();
 		session.setAttribute("categories", categories);
 	%>
