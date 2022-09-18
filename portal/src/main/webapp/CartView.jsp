@@ -22,7 +22,6 @@ if (cartId == null) {
 } else {
 	session.setAttribute("cartid", Long.valueOf(cartId));
 }
-cartId = "29";
 List<CartProduct> cartProducts = CartProductClient.getCartProducts(Long.valueOf(cartId));
 
 String changedCardProduct = (String) request.getParameter("cartproduct");
