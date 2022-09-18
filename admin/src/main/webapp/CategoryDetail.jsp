@@ -17,12 +17,16 @@ Category category = categoryManager.getById(categodyId);
 <body>
 	<a href="/admin/ProductSummary.jsp"><input type="button"
 		value="back"></a>
-	<h3>Category Details</h3>
+	<h3>Category</h3>
 	<h5>
 		Category ID:
 		<%=category.getId()%></h5>
 	<h5>
 		Category Name:
 		<%=category.getName()%></h5>
+	<h5>
+		Category Details:
+		<%=category.getDetail()%>
+	</h5>
 </body>
 </html>
