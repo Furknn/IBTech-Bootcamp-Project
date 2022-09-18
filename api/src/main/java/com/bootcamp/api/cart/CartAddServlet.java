@@ -53,6 +53,7 @@ public class CartAddServlet extends HttpServlet {
 		CartProduct existingCartProduct = CartProductManager.getInstance().getByCartAndProductId(cart.getId(), cartProduct.getProductId());
 		if (existingCartProduct != null) {
 			existingCartProduct.setQuantity(cartProduct.getQuantity());
+			existingCartProduct.setLineAmount(cartProduct.getLineAmount());
 			cartProduct = CartProductManager.getInstance().update(existingCartProduct);
 		} else {
 			cartProduct = CartProductManager.getInstance().create(cartProduct);
@@ -67,7 +68,7 @@ public class CartAddServlet extends HttpServlet {
 		double totalAmount = 0.0;
 		List<CartProduct> cartProducts = CartProductManager.getInstance().getByCartId(cartProduct.getCartId());
 		for (CartProduct cp:cartProducts) {
-			totalAmount += cp.getPrice();
+			totalAmount += cp.getLineAmount();
 		}
 		cart.setTotalAmount(totalAmount);
 		CartManager.getInstance().update(cart);

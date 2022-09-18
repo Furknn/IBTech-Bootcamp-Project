@@ -30,7 +30,7 @@ if(addToCart!=null){
 	cp.setPrice(product.getPrice());
 	cp.setTaxRate(18.0);
 	cp.setQuantity(1);
-	cp.setLineAmount((product.getPrice()+(cp.getTaxRate()*product.getPrice()))*cp.getQuantity());
+	cp.setLineAmount((product.getPrice()+(cp.getTaxRate()*product.getPrice()/100))*cp.getQuantity());
 	
 	CartProductClient.addCart(cp);
 	response.sendRedirect("/portal/CartView.jsp");

@@ -23,25 +23,27 @@ if (cartId == null) {
 	session.setAttribute("cartid", Long.valueOf(cartId));
 }
 List<CartProduct> cartProducts = CartProductClient.getCartProducts(Long.valueOf(cartId));
-
 String changedCardProduct = (String) request.getParameter("cartproduct");
-if (changedCardProduct != null && changedCardProduct!="") {
+if (changedCardProduct != null && changedCardProduct != "") {
 	CartProduct cp = cartProducts.stream()
 	.filter(cartProduct -> cartProduct.getId() == Long.valueOf(changedCardProduct)).findFirst().get();
-	String direction= (String)request.getParameter("changed");
-	if(direction.equals("inc")){
-		cp.setQuantity(cp.getQuantity()+1);	
-	}else if(direction.equals("dec")){
-		cp.setQuantity(cp.getQuantity()-1);
+	String direction = (String) request.getParameter("changed");
+	if (direction.equals("inc")) {
+		cp.setQuantity(cp.getQuantity() + 1);
+	} else if (direction.equals("dec")) {
+		cp.setQuantity(cp.getQuantity() - 1);
+
 	}
-	
+	double lineAmount = (cp.getPrice() + (cp.getPrice() * cp.getTaxRate() / 100)) * cp.getQuantity();
+
+	cp.setLineAmount(lineAmount);
 	CartProductClient.addCart(cp);
 	response.sendRedirect("/portal/CartView.jsp");
 }
 
 String deleted = (String) request.getParameter("deleted");
 
-if (deleted != null && deleted!="") {
+if (deleted != null && deleted != "") {
 	long deletedId = Long.valueOf(deleted);
 	CartProductClient.cartRemove(deletedId);
 	response.sendRedirect("/portal/CartView.jsp");
@@ -52,7 +54,7 @@ List<Category> categories = session.getAttribute("categories") != null
 		: null;
 double totalLineAmount = 0.0;
 for (CartProduct cartProduct : cartProducts) {
-	totalLineAmount += cartProduct.getPrice() + (cartProduct.getPrice() * cartProduct.getTaxRate());
+	totalLineAmount += cartProduct.getLineAmount();
 }
 %>
 <!DOCTYPE html>
@@ -68,17 +70,17 @@ for (CartProduct cartProduct : cartProducts) {
 		<input type="hidden" name="deleted">
 		<div class="shopping-cart">
 			<%
-				int i = 0;
-				for (CartProduct cartProduct : cartProducts) {
-					Product product = ProductClient.getById(cartProduct.getProductId());
-					Category category = categories.stream().filter(c -> c.getId() == product.getCategoryId()).findFirst().get();
-					String productName = product.getName();
-					String imageUrl = product.getImageUrl();
-					String price = String.valueOf(cartProduct.getPrice());
-					String quantity = String.valueOf(cartProduct.getQuantity());
-					String taxRate = String.valueOf(cartProduct.getTaxRate());
-					String lineAmount = String.valueOf(cartProduct.getLineAmount());
-				%>
+			int i = 0;
+			for (CartProduct cartProduct : cartProducts) {
+				Product product = ProductClient.getById(cartProduct.getProductId());
+				Category category = categories.stream().filter(c -> c.getId() == product.getCategoryId()).findFirst().get();
+				String productName = product.getName();
+				String imageUrl = product.getImageUrl();
+				String price = String.valueOf(cartProduct.getPrice());
+				String quantity = String.valueOf(cartProduct.getQuantity());
+				String taxRate = String.valueOf(cartProduct.getTaxRate());
+				String lineAmount = String.valueOf(cartProduct.getLineAmount());
+			%>
 			<div class="item">
 				<div class="buttons">
 					<span class="delete-btn"
@@ -108,25 +110,38 @@ for (CartProduct cartProduct : cartProducts) {
 				</div>
 
 
-				<div class="total-price"><%=price%></div>
+				<div class="total-price">
+					Price
+					<%=price%>
+					TL
+				</div>
+				<div class="total-price">
+					Tax
+					<%=taxRate%>%
+				</div>
+				<div class="total-price">
+					Amount
+					<%=lineAmount%>
+					TL
+				</div>
 			</div>
 			<%
-				i++;
-				}
-				%>
+			i++;
+			}
+			%>
 		</div>
-	</form>
-	<div class="cart-checkout">
-		<div class="cart-checkout-title">
-			<span>Checkout</span>
-		</div>
-		<div>
-			<div class="total-price"><%=totalLineAmount%>
-				TL
+
+		<div class="cart-checkout">
+			<div class="cart-checkout-title">
+				<span>Checkout</span>
+			</div>
+			<div>
+				<div class="total-price"><%=totalLineAmount%>
+					TL
+				</div>
 			</div>
 		</div>
-	</div>
-
+	</form>
 
 </body>
 </html>
