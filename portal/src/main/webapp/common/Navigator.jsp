@@ -10,7 +10,6 @@
 		String username = session.getAttribute("username")!=null? String.valueOf(session.getAttribute("username")):null;
 		String password = session.getAttribute("password")!=null?String.valueOf(session.getAttribute("password")):null;
 		long cartId= session.getAttribute("cartid")!=null?(long)session.getAttribute("cartid"):0;
-	
 		if(username==null ||password==null){
 			redirectToLogin = true;
 		}
@@ -27,7 +26,7 @@
 		</a>
 		<div class="nav-items">
 
-			<a href="#"><img width="10px"
+			<a href="<%=redirectToLogin?"/portal/UserLogin.jsp":"/portal/UserWelcome.jsp"%>"><img width="10px"
 				src="./icons/user.png" alt=""></a>
 			<a href=<%="/portal/CartView.jsp"%>><img width="10px"
 				src="./icons/cart.png" alt=""></a>
