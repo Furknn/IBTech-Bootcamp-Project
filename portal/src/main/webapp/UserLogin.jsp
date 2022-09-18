@@ -31,10 +31,13 @@
 <title>User Login</title>
 </head>
 <body>
+<jsp:include page="./common/UserNavigator.jsp"></jsp:include>
+
 	<div class="form-container">
 		<form action="#" method="post" name="loginForm">
 			<div class="title">Login</div>
 			<br/><br/><br/>
+
 			<div class="text-input">
 				<label>Username</label> <input type="text" name="uname" placeholder="Username">
 			</div>
@@ -50,7 +53,7 @@
 				</span >
 				
 				<span class="button" onclick="location.href='/portal/UserRegister.jsp'">
-					Register
+					Register ->
 				</span>
 			</div>
 

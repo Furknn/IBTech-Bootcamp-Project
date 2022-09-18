@@ -19,13 +19,16 @@ if (username != null && password != null) {
 %>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <link href="./css/user.css" rel="stylesheet" type="text/css">
 <title>User Register</title>
 </head>
 <body>
-	<div class="form-container">
+<jsp:include page="./common/UserNavigator.jsp"></jsp:include>
+
+	<section class="form-container">
 		<form action="#" method="post" name="loginForm">
 			<div class="title">Register</div>
 			<br />
@@ -47,10 +50,10 @@ if (username != null && password != null) {
 			<div class="buttons">
 				<span class="button" onclick="{loginForm.submit();}">
 					Register </span> <span class="button"
-					onclick="location.href='/portal/UserLogin.jsp'"> Login </span>
+					onclick="location.href='/portal/UserLogin.jsp'"> Login -> </span>
 			</div>
 
 		</form>
-	</div>
+	</section>
 </body>
 </html>
