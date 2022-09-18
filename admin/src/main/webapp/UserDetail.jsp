@@ -17,7 +17,7 @@
 	<a href="/admin/UserSummary.jsp"><input type="button"
 		value="back"></a>
 	<h3>User Detail</h3>
-	</br>
+	<br/>
 	<h5>
 		ID =
 		<%=user.getId()%></h5>

@@ -19,7 +19,7 @@ public class CartRemoveServlet extends HttpServlet {
 		long cartId = Long.parseLong(request.getParameter("cartproductid"));
 		CartProductManager.getInstance().delete(cartId);
 
-		if (CartManager.getInstance().getById(cartId) == null) {
+		if (CartProductManager.getInstance().getById(cartId) == null) {
 			response.getWriter().append("Cart product removed");
 			response.setStatus(200);
 		} else {

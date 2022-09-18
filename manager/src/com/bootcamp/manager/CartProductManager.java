@@ -145,4 +145,19 @@ public class CartProductManager extends BaseManager<CartProduct> {
             return null;
         }
     }
+
+    public CartProduct getByCartAndProductId(long cartId, long productId) {
+        try {
+            PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM CartProduct WHERE cartid=? AND productid=?");
+            statement.setLong(1, cartId);
+            statement.setLong(2, productId);
+            ResultSet result = statement.executeQuery();
+            CartProduct cartProduct = parse(result);
+            disconnect();
+            return cartProduct;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

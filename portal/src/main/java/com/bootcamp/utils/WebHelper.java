@@ -1,5 +1,6 @@
 package com.bootcamp.utils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -27,4 +28,17 @@ public class WebHelper {
 		}
 		return connection;
 	}
+
+    public static String streamRead(InputStream inputStream) {
+        try {
+			while (inputStream.available() > 0) {
+				byte[] buffer = new byte[inputStream.available()];
+				inputStream.read(buffer);
+				return new String(buffer);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+    }
 }

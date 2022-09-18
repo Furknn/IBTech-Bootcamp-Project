@@ -1,10 +1,14 @@
 <%@page import="com.bootcamp.manager.CartProductManager"%>
 <%@page import="com.bootcamp.entity.CartProduct"%>
+<%@page import="com.bootcamp.manager.CartManager"%>
+<%@page import="com.bootcamp.entity.Cart"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
-    	List<CartProduct> cartProducts = CartProductManager.getInstance().getByCartId(Long.valueOf(request.getParameter("cartid")));
+    	long cartId=Long.valueOf(request.getParameter("cartid"));
+    	Cart cart= CartManager.getInstance().getById(cartId);
+    	List<CartProduct> cartProducts = CartProductManager.getInstance().getByCartId(cartId);
     %>
 <!DOCTYPE html>
 <html>
@@ -32,7 +36,6 @@
 					<%
 					for (CartProduct cp : cartProducts) {
 						String cartProductId = String.valueOf(cp.getId());
-						String cartId = String.valueOf(cp.getCartId());
 						String productId = String.valueOf(cp.getProductId());
 						String quantity = String.valueOf(cp.getQuantity());
 						String price = String.valueOf(cp.getPrice());
@@ -52,7 +55,9 @@
 					}
 					%>
 				</table>
+				
 			</form>
+			<h5>Total Price = <%= cart.getTotalAmount()%></h5>
 			<br />
 		</div>
 	</div>

@@ -18,7 +18,7 @@ import com.bootcamp.utils.XmlHelper;
 import com.bootcamp.xml.CategoryXmlManager;
 
 @WebServlet("/categories")
-public class CategoryServlet extends HttpServlet {
+public class CategoriesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

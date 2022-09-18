@@ -1,6 +1,8 @@
 package com.bootcamp.api.cart;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +15,9 @@ import javax.xml.transform.TransformerException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import com.bootcamp.entity.Cart;
 import com.bootcamp.entity.CartProduct;
+import com.bootcamp.manager.CartManager;
 import com.bootcamp.manager.CartProductManager;
 import com.bootcamp.utils.XmlHelper;
 import com.bootcamp.xml.CartProductXmlManager;
@@ -21,7 +25,7 @@ import com.bootcamp.xml.CartProductXmlManager;
 @WebServlet("/cart/add")
 public class CartAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Document document;
 		try {
@@ -31,18 +35,42 @@ public class CartAddServlet extends HttpServlet {
 			response.setStatus(500);
 			return;
 		}
+
 		CartProduct cartProduct = CartProductXmlManager.getInstance().parse(document);
 		if (cartProduct == null) {
 			response.getWriter().append("CartProduct is null");
 			response.setStatus(400);
 			return;
 		}
-		cartProduct = CartProductManager.getInstance().create(cartProduct);
+
+		Cart cart = CartManager.getInstance().getById(cartProduct.getCartId());
+		if (cart == null) {
+			response.getWriter().append("Cart not found");
+			response.setStatus(500);
+			return;
+		}
+
+		CartProduct existingCartProduct = CartProductManager.getInstance().getByCartAndProductId(cart.getId(), cartProduct.getProductId());
+		if (existingCartProduct != null) {
+			existingCartProduct.setQuantity(cartProduct.getQuantity());
+			cartProduct = CartProductManager.getInstance().update(existingCartProduct);
+		} else {
+			cartProduct = CartProductManager.getInstance().create(cartProduct);
+		}
+
 		if (cartProduct == null){
 			response.getWriter().append("CartProduct not created");
 			response.setStatus(500);
 			return;
 		}
+
+		double totalAmount = 0.0;
+		List<CartProduct> cartProducts = CartProductManager.getInstance().getByCartId(cartProduct.getCartId());
+		for (CartProduct cp:cartProducts) {
+			totalAmount += cp.getPrice();
+		}
+		cart.setTotalAmount(totalAmount);
+		CartManager.getInstance().update(cart);
 
 		document = CartProductXmlManager.getInstance().format(cartProduct);
 		response.setContentType("application/xml; charset=UTF-8");

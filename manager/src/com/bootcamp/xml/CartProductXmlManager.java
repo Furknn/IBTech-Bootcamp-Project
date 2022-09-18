@@ -63,7 +63,7 @@ public class CartProductXmlManager extends BaseXmlManager<CartProduct> {
         for (int i = 0; i < nodeList.getLength(); i++) {
             Element node = (Element) nodeList.item(i);
             long id = Long.parseLong(node.getAttribute("id"));
-            long cartId = Long.parseLong(node.getElementsByTagName("cartId").item(0).getTextContent());
+            long cartId = Long.parseLong(node.getElementsByTagName("cartid").item(0).getTextContent());
             long productId = Long.parseLong(node.getElementsByTagName("productid").item(0).getTextContent());
             int quantity = Integer.parseInt(node.getElementsByTagName("quantity").item(0).getTextContent());
             double price = Double.parseDouble(node.getElementsByTagName("price").item(0).getTextContent());

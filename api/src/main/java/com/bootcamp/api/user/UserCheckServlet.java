@@ -17,9 +17,6 @@ import com.bootcamp.manager.UserManager;
 import com.bootcamp.utils.XmlHelper;
 import com.bootcamp.xml.UserXmlManager;
 
-/**
- * Servlet implementation class UserCheckServlet
- */
 @WebServlet("/user/check")
 public class UserCheckServlet extends HttpServlet {
 
@@ -34,12 +31,18 @@ public class UserCheckServlet extends HttpServlet {
 			return;
 		}
 		User loggedUser = UserXmlManager.getInstance().parse(document);
+		if (loggedUser == null) {
+			response.setStatus(500);
+			response.getWriter().append("Bad request");
+			return;
+		}
+
 		boolean isLogged = UserManager.getInstance().check(loggedUser);
 		if(isLogged) {
-			response.getWriter().append("User exists");
+			response.getWriter().append("true");
 			response.setStatus(200);
 		} else {
-			response.getWriter().append("User doesn't exist");
+			response.getWriter().append("false");
 			response.setStatus(401);
 		}
 	}
